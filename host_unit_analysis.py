@@ -42,6 +42,7 @@ def get_host(url, headers, host_groups):
                 })
                 host_groups["no_host_group"]["totalHostUnit"] += host_unit
         host_url = data.get('nextPageKey')
+        time.sleep(0.500)
 
     return host_groups
 
@@ -64,6 +65,7 @@ def get_host_group(url, headers):
             host_groups[entity_id] = {'displayName': display_name, "hosts":[], "totalHostUnit":0}
 
         host_group_url = data.get('nextPageKey')
+        time.sleep(0.500)
 
     return host_groups
 
@@ -110,8 +112,8 @@ def main():
         post_host_unit_analysis_metric(final_host_groups, urlPost, headersPost)
         print("Job completed successfully.")
 
-    # Schedule the job to run every hour
-    schedule.every().minute.do(job)
+    # Schedule the job to run every 2 minutes
+    schedule.every(2).minutes.do(job)
 
     # Main loop to continuously check and run scheduled jobs
     while True:
